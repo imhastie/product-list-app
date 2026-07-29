@@ -2,8 +2,9 @@
 import { useState, useCallback } from "react";
 import { SearchBar } from "@/components/SearchBar/SearchBar";
 import { ProductList } from "@/components/ProductList/ProductList";
-import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
-import { ErrorMessage } from "@/components/ui/ErrorMessage";
+import { LoadingSpinner } from "@/components/UI/LoadingSpinner";
+import { ErrorMessage } from "@/components/UI/ErrorMessage";
+import { ErrorBoundary } from "@/components/UI/ErrorBoundary";
 import { useProducts } from "@/hooks/useProducts";
 
 export default function Home() {
@@ -21,7 +22,11 @@ export default function Home() {
 
       {isLoading && <LoadingSpinner />}
       {isError && <ErrorMessage message="Something went wrong. Please try again." />}
-      {!isLoading && !isError && <ProductList products={products} />}
+      {!isLoading && !isError && (
+        <ErrorBoundary>
+          <ProductList products={products} />
+        </ErrorBoundary>
+      )}
     </main>
   );
 }
