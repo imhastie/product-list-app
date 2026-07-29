@@ -1,4 +1,4 @@
-const BASE_URL = "https://dummyjson.com";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function fetchProducts(query: string = ""): Promise<{ products: Product[] }> {
   const url = query
