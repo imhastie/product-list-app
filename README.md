@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Product List App
 
-## Getting Started
+A responsive product listing page with search, built with Next.js. Fetches products from a public API and handles the usual loading/error states.
 
-First, run the development server:
+## Stack
+
+- Next.js (App Router) + TypeScript
+- SWR for data fetching/caching
+- Tailwind for styling
+
+## Notes on a few decisions
+
+- Search is debounced (400ms) so it's not firing a request on every keystroke.
+- Using SWR's `keepPreviousData` so the grid doesn't flash empty between searches.
+- `next/image` for the thumbnails instead of `<img>`, mostly for the lazy-loading.
+- There's an error boundary around the product grid, separate from the fetch error state. SWR's error only covers the network call failing — the boundary catches anything that blows up during render (bad data shape, etc).
+- API calls are isolated in `lib/api.ts`, fetching/caching logic in `hooks/useProducts.ts`. `page.tsx` just wires things together, no fetch logic in components.
+
+## Structure
+
+```
+app/
+  page.tsx
+components/
+  ProductList/
+    ProductList.tsx
+    ProductCard.tsx
+  SearchBar/
+    SearchBar.tsx
+  ui/
+    LoadingSpinner.tsx
+    ErrorMessage.tsx
+    ErrorBoundary.tsx
+hooks/
+  useProducts.ts
+lib/
+  api.ts
+types/
+  product.ts
+```
+
+## Running it
+
+```bash
+git clone https://github.com/imhastie/product-list-app.git
+cd product-list-app
+npm install
+```
+
+Add a `.env.local`:
+
+```
+NEXT_PUBLIC_API_URL=https://dummyjson.com
+```
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## If I had more time
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Pagination — fine for now since the dataset's small, wouldn't scale as-is
+- Category/price filters
+- Tests around `useProducts` and the components
+- Skeleton loaders instead of a spinner
