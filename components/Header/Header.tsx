@@ -15,13 +15,13 @@ export function Header() {
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
-            className="p-2 rounded-lg hover:bg-[var(--background)] transition-colors text-[var(--foreground)]"
+            className="cursor-pointer p-2 rounded-lg hover:bg-[var(--background)] transition-colors text-[var(--foreground)]"
           >
             {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
           </button>
           <button
             aria-label="Cart"
-            className="relative p-2 rounded-lg hover:bg-[var(--background)] transition-colors text-[var(--foreground)]"
+            className="cursor-pointer relative p-2 rounded-lg hover:bg-[var(--background)] transition-colors text-[var(--foreground)]"
           >
             <ShoppingCart size={18} />
             {count > 0 && (
