@@ -3,7 +3,13 @@ import { ProductCard } from "./ProductCard";
 
 export function ProductList({ products }: { products: Product[] }) {
   if (products.length === 0) {
-    return <p className="text-center text-gray-500 py-10">No products found.</p>;
+    return (
+      <div className="text-center py-20">
+        <p className="text-[var(--muted)] text-sm">
+          No products match your search.
+        </p>
+      </div>
+    );
   }
 
   return (

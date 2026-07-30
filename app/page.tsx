@@ -14,19 +14,25 @@ export default function Home() {
   const handleSearch = useCallback((q: string) => setQuery(q), []);
 
   return (
-    <main className="max-w-6xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Products</h1>
-      <div className="mb-6 max-w-md">
-        <SearchBar onSearch={handleSearch} />
-      </div>
+    <main className="min-h-screen bg-[var(--background)]">
+      <div className="max-w-6xl mx-auto px-4 py-10">
+        <h1 className="text-2xl font-semibold text-[var(--foreground)] tracking-tight mb-6">
+          Products
+        </h1>
+        <div className="mb-8 max-w-sm">
+          <SearchBar onSearch={handleSearch} />
+        </div>
 
-      {isLoading && <LoadingSpinner />}
-      {isError && <ErrorMessage message="Something went wrong. Please try again." />}
-      {!isLoading && !isError && (
-        <ErrorBoundary>
-          <ProductList products={products} />
-        </ErrorBoundary>
-      )}
+        {isLoading && <LoadingSpinner />}
+        {isError && (
+          <ErrorMessage message="Something went wrong. Please try again." />
+        )}
+        {!isLoading && !isError && (
+          <ErrorBoundary>
+            <ProductList products={products} />
+          </ErrorBoundary>
+        )}
+      </div>
     </main>
   );
 }
