@@ -27,7 +27,7 @@ components/
     ProductCard.tsx
   SearchBar/
     SearchBar.tsx
-  ui/
+  UI/
     LoadingSpinner.tsx
     ErrorMessage.tsx
     ErrorBoundary.tsx
